@@ -68,7 +68,7 @@ def getRules(L, minConfidence):
                 if getFreq(left) <= maxDen:
                     print(str(left).replace('[', '').replace(']', '').replace(' ', '') + '->' + str(right).replace('[', '').replace(']', ''))
                 if getFreq(right) <= maxDen:
-                    print(str(right).replace('[', '').replace(']', '').replace(' ', '')+ '->' + str(left).replace('[', '').replace(']', ''))
+                    print(str(right).replace('[', '').replace(']', '').replace(' ', '') + '->' + str(left).replace('[', '').replace(']', ''))
 
 if __name__ == '__main__':
     L = apriori(4)
