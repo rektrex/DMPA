@@ -17,6 +17,9 @@ def k_means(points, k):
         oldclusters = deepcopy(clusters)
 
 if __name__ == '__main__':
-    points = [(1.0, 1.0), (1.5, 2.0), (3.0, 4.0), (5.0, 7.0), (3.5, 5.0), (4.5, 5.0), (3.5, 4.5)]
-    result = k_means(points, k = 3)
-    print(*result, sep = '\n')
+    with open('points.txt', 'r') as f:
+        t = f.readlines()
+        p = list(map(lambda x: x.rstrip('\n'), t))
+        points = list(map(lambda y: tuple(map(float, y.split(','))), p))
+        result = k_means(points, k = 3)
+        print(*result, sep = '\n')
