@@ -1,28 +1,16 @@
-import copy
-import random
+from random import sample
+from copy import deepcopy
 from math import sqrt
 
 def dist(x, y):
-    sum = 0
-    for i in range(len(x)):
-        t = x[i] - y[i]
-        sum = sum + t * t
-    return sqrt(sum)
+    return sqrt(sum(list(map(lambda t: (t[0] - t[1]) ** 2, list(zip(x, y))))))
 
 def mean(lot):
-    p = len(lot[0])
-    l = len(lot)
-    t = [0 for _ in range(p)]
-    for i in range(l):
-        for j in range(p):
-            t[j] = t[j] + lot[i][j]
-
-    t = tuple(map(lambda x: x / l, t))
-    return t
+    return tuple([sum(t) / len(t) for t in zip(*lot)])
 
 def k_means(points, k):
     centres = []
-    pcentres = random.sample(list(range(len(points))), k)
+    pcentres = sample(list(range(len(points))), k)
     for i in pcentres:
         centres.append(points[i])
 
@@ -38,11 +26,10 @@ def k_means(points, k):
             return clusters
 
         centres = list(map(mean, clusters))
-        oldclusters = copy.deepcopy(clusters)
+        oldclusters = deepcopy(clusters)
 
 if __name__ == '__main__':
     points = [(1.0, 1.0), (1.5, 2.0), (3.0, 4.0), (5.0, 7.0), (3.5, 5.0), (4.5, 5.0), (3.5, 4.5)]
     k = 3
     result = k_means(points, k)
-    for r in result:
-        print(r)
+    print(*result, sep = '\n')
