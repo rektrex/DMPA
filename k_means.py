@@ -2,7 +2,7 @@ from random import sample
 from copy import deepcopy
 
 def k_means(points, k):
-    centres = [points[i] for i in sample(list(range(len(points))), k)]
+    centres = sample(points, k)
     oldclusters = [[] for _ in range(k)]
     while True:
         clusters = [[] for _ in range(k)]
