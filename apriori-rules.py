@@ -59,17 +59,16 @@ def apriori(minSupport):
     return L
 
 def getRules(L, minConfidence):
-    for k in L:
+    for k in L[1:]:
         for l in k:
-            if len(l) > 1:
-                maxDen = getFreq(l) * 100 / minConfidence
-                for x in range(1, len(l)):
-                    left = l[:x]
-                    right = l[x:]
-                    if getFreq(left) <= maxDen:
-                        print(str(left).replace('[', '').replace(']', '') + '->' + str(right).replace('[', '').replace(']', ''))
-                    if getFreq(right) <= maxDen:
-                        print(str(right).replace('[', '').replace(']', '') + '->' + str(left).replace('[', '').replace(']', ''))
+            maxDen = getFreq(l) * 100 / minConfidence
+            for x in range(1, len(l)):
+                left = l[:x]
+                right = l[x:]
+                if getFreq(left) <= maxDen:
+                    print(str(left).replace('[', '').replace(']', '').replace(' ', '') + '->' + str(right).replace('[', '').replace(']', ''))
+                if getFreq(right) <= maxDen:
+                    print(str(right).replace('[', '').replace(']', '').replace(' ', '')+ '->' + str(left).replace('[', '').replace(']', ''))
 
 if __name__ == '__main__':
     L = apriori(4)
