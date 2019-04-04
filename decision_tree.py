@@ -16,44 +16,23 @@ def countsOfTypes(column):
     counts = {}
     for val in column:
         counts[val] = counts.get(val, 0) + 1
-
     return counts
 
-class Node:
-    def __init__(self,attribute):
-        self.parent = None
-        self.attribute = attribute
-        self.children = {}
+def findMinGain(columns, titles, level = 0, pClass = ''):
 
-class Tree:
-    def __init__(self):
-        self.root = None
-
-    def getRoot(self):
-        return self.root
-
-    def add(self, child, pClass, parent = None):
-        if self.root == None:
-            self.root = child
-        else:
-            child.parent = parent
-            parent[pClass] = child
-
-def findMinGain(columns, tree):
-
-    if len(set(columns[-1])):
-        t = Tree()
-        t.add(Node(columns[-1][0]))
-        return t
+    if len(set(columns[-1])) == 1:
+        res = ' ' * level + pClass + '->' + str(columns[-1][0])
+        print(res)
+        return
 
     if len(columns) == 1:
         counts = countsOfTypes(columns[-1])
         vals = list(counts.values())
         keys = list(counts.keys())
         label = keys[vals.index(max(vals))]
-        t = Tree()
-        t.add(Node(label))
-        return t
+        res = ' ' * level + pClass + '->' + label
+        print(res)
+        return
 
     colCount = len(columns[0])
     types = list(map(lambda col: len(set(col)), columns))
@@ -81,14 +60,23 @@ def findMinGain(columns, tree):
             localEntropies[j] += tmp
 
     minIndex = localEntropies.index(min(localEntropies))
+    res = ' ' * level + pClass + '->' + titles[minIndex]
+    print(res)
+    titles = titles[:minIndex] + titles[minIndex+1:]
+    for part in counts[minIndex]:
+        tColumns = [[] for i in range(len(columns) - 1)]
+        for i in range(len(columns[0])):
+            if part == columns[minIndex][i]:
+                k = 0
+                for j in range(len(columns)):
+                    if j != minIndex:
+                        tColumns[k].append(columns[j][i])
+                        k += 1
 
-    return tree
+        findMinGain(tColumns, titles, level + 1, pClass = part)
 
 if __name__ == '__main__':
     titles = readTitles()
     data = readData()
-
     columns = [[rows[i] for rows in data] for i in range(len(titles))]
-
-    tree = Tree()
-    findMinGain(columns, tree)
+    findMinGain(columns, titles)
