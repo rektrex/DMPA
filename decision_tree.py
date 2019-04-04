@@ -39,10 +39,10 @@ def findMinGain(columns, titles, level = 0, pClass = ''):
 
     counts = [countsOfTypes(col) for col in columns]
 
-    globalEntropy = 0
-    for i in counts[-1].values():
-        globalEntropy += i/colCount * log2(i/colCount)
-    globalEntropy *=-1
+    # globalEntropy = 0
+    # for i in counts[-1].values():
+    #     globalEntropy += i/colCount * log2(i/colCount)
+    # globalEntropy *=-1
 
     localEntropies = [0] * (len(columns) - 1)
     for (j, c) in enumerate(counts[:-1]):
