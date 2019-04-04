@@ -21,7 +21,7 @@ def countsOfTypes(column):
 def findMinGain(columns, titles, level = 0, pClass = ''):
 
     if len(set(columns[-1])) == 1:
-        res = ' ' * level + pClass + '->' + str(columns[-1][0])
+        res = ' ' * level * 2 + pClass + '->' + str(columns[-1][0])
         print(res)
         return
 
@@ -30,7 +30,7 @@ def findMinGain(columns, titles, level = 0, pClass = ''):
         vals = list(counts.values())
         keys = list(counts.keys())
         label = keys[vals.index(max(vals))]
-        res = ' ' * level + pClass + '->' + label
+        res = ' ' * level * 2 + pClass + '->' + label
         print(res)
         return
 
@@ -60,7 +60,10 @@ def findMinGain(columns, titles, level = 0, pClass = ''):
             localEntropies[j] += tmp
 
     minIndex = localEntropies.index(min(localEntropies))
-    res = ' ' * level + pClass + '->' + titles[minIndex]
+    if level == 0:
+        res = titles[minIndex]
+    else:
+        res = ' ' * level * 2 + pClass + '->' + titles[minIndex]
     print(res)
     titles = titles[:minIndex] + titles[minIndex+1:]
     for part in counts[minIndex]:
